@@ -1,5 +1,5 @@
 <h3 align="center">
-  <a href="https://github.com/pucrs-poli/constr-sw-2022-2-g2">
+  <a href="https://gitpod.io/#https://github.com/pucrs-poli/constr-sw-2022-2-g2">
     <img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" />
   </a>
   <p></p>
