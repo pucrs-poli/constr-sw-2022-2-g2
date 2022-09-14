@@ -1,29 +1,31 @@
 import { Request, Response, NextFunction } from "express";
 import axios, { AxiosResponse } from "axios";
 
-interface User {
-  nome: string;
-  idade: number;
-}
+// interface User {
+//   nome: string;
+//   idade: number;
+// }
 
 interface IApiResponse {
-  data: User;
+  data: any;
 }
 
 // getting a single user
 const getUser = async (req: Request, res: Response, next: NextFunction) => {
   // get the user id from the req
-  let id: string = req.params.id;
+  let realm: string = req.params.realm;
+
+  let result: AxiosResponse = await axios.get(`http://localhost:8080/auth/realms/${realm}/protocol/openid-connect/userinfo`);
 
   // get the mocked user
-  let result: IApiResponse = {
-    data: {
-      nome: "Bruno",
-      idade: 23,
-    }
-  }
+  // let result: IApiResponse = {
+  //   data: {
+  //     nome: "Bruno",
+  //     idade: 23,
+  //   }
+  // }
 
-  let user: User = result.data;
+  let user: any = result.data;
   return res.status(200).json({
     message: user,
   });
