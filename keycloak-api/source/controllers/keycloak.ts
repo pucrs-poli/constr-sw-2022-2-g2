@@ -1,55 +1,28 @@
 import { Request, Response, NextFunction } from "express";
 import axios, { AxiosResponse } from "axios";
 
-// interface User {
-//   nome: string;
-//   idade: number;
-// }
-
-interface IApiResponse {
-  data: any;
-}
-
-// getting a single user
-const getUser = async (req: Request, res: Response, next: NextFunction) => {
-  // get the user id from the req
+// login in keycloak
+const login = async (req: Request, res: Response) => {
+  // get the realm from the request params
   let realm: string = req.params.realm;
 
-  let result: AxiosResponse = await axios.get(`http://localhost:8080/auth/realms/${realm}/protocol/openid-connect/userinfo`);
-
-  // get the mocked user
-  // let result: IApiResponse = {
-  //   data: {
-  //     nome: "Bruno",
-  //     idade: 23,
-  //   }
-  // }
-
-  let user: any = result.data;
-  return res.status(200).json({
-    message: user,
-  });
-};
-
-// adding a user
-const addUser = async (req: Request, res: Response, next: NextFunction) => {
   // get the data from req.body
-  let title: string = req.body.title;
-  let body: string = req.body.body;
+  let client_id: string = req.body.client_id;
+  let client_secret: string = req.body.client_secret;
+  let username: string = req.body.username;
+  let password: string = req.body.password;
 
-  // add the post
-  let response: AxiosResponse = await axios.post(
-    `https://jsonplaceholder.typicode.com/posts`,
-    {
-      title,
-      body,
-    }
-  );
-  
+  const params = new URLSearchParams();
+  params.append("client_id", client_id);
+  params.append("client_secret", client_secret);
+  params.append("username", username);
+  params.append("password", password);
+  params.append("grant_type", "password");
+
+  let response: AxiosResponse = await axios.post(`http://localhost:8080/auth/realms/${realm}/protocol/openid-connect/token`, params);
+
   // return response
-  return res.status(200).json({
-    message: response.data,
-  });
+  return res.status(200).json(response.data);
 };
 
-export default { getUser, addUser };
+export default { login };
