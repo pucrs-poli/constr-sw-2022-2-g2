@@ -49,8 +49,9 @@ const userInfo = async (req: Request, res: Response) => {
 const getUsers = async (req: Request, res: Response) => {
   let realm: string = req.params.realm;
   let token: string = req.headers.authorization || "";
+
   let response: AxiosResponse = await axios.get(
-    `http://localhost:8080/${realm}/users`,
+    `http://localhost:8080/auth/admin/realms/${realm}/users`,
     {
       headers: {
         Authorization: token,
@@ -66,7 +67,7 @@ const getUserById = async (req: Request, res: Response) => {
   let id: string = req.params.id;
   let token: string = req.headers.authorization || "";
   let response: AxiosResponse = await axios.get(
-    `http://localhost:8080/${realm}/users/${id}`,
+    `http://localhost:8080/auth/admin/realms/${realm}/users/${id}`,
     {
       headers: {
         Authorization: token,
