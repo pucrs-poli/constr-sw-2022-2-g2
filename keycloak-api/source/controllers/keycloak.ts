@@ -61,6 +61,22 @@ const getUsers = async (req: Request, res: Response) => {
   return res.status(200).json(response.data);
 }
 
-export default { login, userInfo, getUsers };
+const getUserById = async (req: Request, res: Response) => {
+  let realm: string = req.params.realm;
+  let id: string = req.params.id;
+  let token: string = req.headers.authorization || "";
+  let response: AxiosResponse = await axios.get(
+    `http://localhost:8080/${realm}/users/${id}`,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+
+  return res.status(200).json(response.data);
+}
+
+export default { login, userInfo, getUsers, getUserById };
 
 // Language: typescript
