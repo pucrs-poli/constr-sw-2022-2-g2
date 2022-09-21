@@ -1,7 +1,8 @@
-import express from 'express';
-import controller from '../controllers/keycloak';
+import express from "express";
+import controller from "../controllers/keycloak";
 const router = express.Router();
 
-router.post('/login/:realm', controller.login);
+router.post("/login/:realm", controller.login);
+router.get("/userinfo/:realm", controller.userInfo);
 
 export = router;
