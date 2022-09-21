@@ -8,5 +8,7 @@ router.get("/users/:realm", controller.getUsers);
 router.get("/users/:realm/:id", controller.getUserById);
 router.post("/users/:realm/:id", controller.createUser);
 router.delete("/users/:realm/:id", controller.deleteUser);
+router.put("/users/:realm/:id", controller.updateUserData);
+router.patch("/users/:realm/:id", controller.updateUserPassword);
 
 export = router;

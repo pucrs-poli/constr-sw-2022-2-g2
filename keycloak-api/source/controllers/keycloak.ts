@@ -73,7 +73,6 @@ const getUserById = async (req: Request, res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   let realm: string = req.params.realm;
-  let id: string = req.params.id;
   let token: string = req.headers.authorization || "";
   let response: AxiosResponse = await axios.post(
     `http://localhost:8080/auth/admin/realms/${realm}/users`,
@@ -81,7 +80,7 @@ const createUser = async (req: Request, res: Response) => {
       headers: {
         Authorization: token,
       },
-     data:req.body   }
+     data: req.body   }
   );
 
   return res.status(200).json(response.data);
@@ -103,8 +102,39 @@ const deleteUser = async (req: Request, res: Response) => {
   return res.status(200).json(response.data);
 }
 
+  const updateUserData = async (req: Request, res: Response) => {
+    let realm: string = req.params.realm;
+    let id: string = req.params.id;
+    let token: string = req.headers.authorization || "";
+    let response: AxiosResponse = await axios.put(
+      `http://localhost:8080/auth/admin/realms/${realm}/users/${id}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+       data: req.body   }
+    );
+  
+    return res.status(200).json(response.data);
+  }
+
+  const updateUserPassword = async (req: Request, res: Response) => {
+    let realm: string = req.params.realm;
+    let id: string = req.params.id;
+    let token: string = req.headers.authorization || "";
+    let response: AxiosResponse = await axios.put(
+      `http://localhost:8080/auth/admin/realms/${realm}/users/${id}/reset-password`,
+      {
+        headers: {
+          Authorization: token,
+        },
+       data: req.body   }
+    );
+  
+    return res.status(200).json(response.data);
+  }
 
 
-export default { login, userInfo, getUsers, getUserById, createUser, deleteUser };
+export default { login, userInfo, getUsers, getUserById, createUser, deleteUser, updateUserData, updateUserPassword };
 
 // Language: typescript
