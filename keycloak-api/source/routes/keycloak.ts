@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.post("/login/:realm", controller.login);
 router.get("/userinfo/:realm", controller.userInfo);
+router.get("/users/:realm", controller.getUsers);
 
 export = router;
