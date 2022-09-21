@@ -22,7 +22,7 @@ const login = async (req: Request, res: Response) => {
 
   return res.status(200).json(response.data);
 };
-
+  //userinfo
 const userInfo = async (req: Request, res: Response) => {
   let realm: string = req.params.realm;
   let token: string = req.headers.authorization || "";
@@ -133,8 +133,7 @@ const deleteUser = async (req: Request, res: Response) => {
   
     return res.status(200).json(response.data);
   }
+ 
 
+export default { login, userInfo, getUsers, getUserById, createUser, deleteUser, updateUserData, updateUserPassword};
 
-export default { login, userInfo, getUsers, getUserById, createUser, deleteUser, updateUserData, updateUserPassword };
-
-// Language: typescript
