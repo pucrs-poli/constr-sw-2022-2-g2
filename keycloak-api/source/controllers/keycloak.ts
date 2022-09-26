@@ -71,7 +71,6 @@ const getUserById = async (req: Request, res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
-  console.log(req.body);
   let response: AxiosResponse = await axios.post(
     `http://localhost:8080/auth/admin/realms/${realm}/users`,
     {
