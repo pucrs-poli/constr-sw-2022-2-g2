@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import axios, { AxiosResponse } from "axios";
 
-
-const realm = 'constr-sw-2022-2'
+const realm = "constr-sw-2022-2";
 
 // login in keycloak
 const login = async (req: Request, res: Response) => {
@@ -24,7 +23,7 @@ const login = async (req: Request, res: Response) => {
 
   return res.status(200).json(response.data);
 };
-  //userinfo
+//userinfo
 const userInfo = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
   let response: AxiosResponse = await axios.get(
@@ -53,7 +52,7 @@ const getUsers = async (req: Request, res: Response) => {
   );
 
   return res.status(200).json(response.data);
-}
+};
 
 const getUserById = async (req: Request, res: Response) => {
   let id: string = req.params.id;
@@ -68,21 +67,23 @@ const getUserById = async (req: Request, res: Response) => {
   );
 
   return res.status(200).json(response.data);
-}
+};
 
 const createUser = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
+  console.log(req.body);
   let response: AxiosResponse = await axios.post(
     `http://localhost:8080/auth/admin/realms/${realm}/users`,
     {
       headers: {
         Authorization: token,
       },
-     data: req.body   }
+      data: res.json(req.body),
+    }
   );
 
   return res.status(200).json(response.data);
-}
+};
 
 const deleteUser = async (req: Request, res: Response) => {
   let id: string = req.params.id;
@@ -97,38 +98,47 @@ const deleteUser = async (req: Request, res: Response) => {
   );
 
   return res.status(200).json(response.data);
-}
+};
 
-  const updateUserData = async (req: Request, res: Response) => {
-    let id: string = req.params.id;
-    let token: string = req.headers.authorization || "";
-    let response: AxiosResponse = await axios.put(
-      `http://localhost:8080/auth/admin/realms/${realm}/users/${id}`,
-      {
-        headers: {
-          Authorization: token,
-        },
-       data: req.body   }
-    );
-  
-    return res.status(200).json(response.data);
-  }
+const updateUserData = async (req: Request, res: Response) => {
+  let id: string = req.params.id;
+  let token: string = req.headers.authorization || "";
+  let response: AxiosResponse = await axios.put(
+    `http://localhost:8080/auth/admin/realms/${realm}/users/${id}`,
+    {
+      headers: {
+        Authorization: token,
+      },
+      data: res.json(req.body),
+    }
+  );
 
-  const updateUserPassword = async (req: Request, res: Response) => {
-    let id: string = req.params.id;
-    let token: string = req.headers.authorization || "";
-    let response: AxiosResponse = await axios.put(
-      `http://localhost:8080/auth/admin/realms/${realm}/users/${id}/reset-password`,
-      {
-        headers: {
-          Authorization: token,
-        },
-       data: req.body   }
-    );
-  
-    return res.status(200).json(response.data);
-  }
- 
+  return res.status(200).json(response.data);
+};
 
-export default { login, userInfo, getUsers, getUserById, createUser, deleteUser, updateUserData, updateUserPassword};
+const updateUserPassword = async (req: Request, res: Response) => {
+  let id: string = req.params.id;
+  let token: string = req.headers.authorization || "";
+  let response: AxiosResponse = await axios.put(
+    `http://localhost:8080/auth/admin/realms/${realm}/users/${id}/reset-password`,
+    {
+      headers: {
+        Authorization: token,
+      },
+      data: res.json(req.body),
+    }
+  );
 
+  return res.status(200).json(response.data);
+};
+
+export default {
+  login,
+  userInfo,
+  getUsers,
+  getUserById,
+  createUser,
+  deleteUser,
+  updateUserData,
+  updateUserPassword,
+};
