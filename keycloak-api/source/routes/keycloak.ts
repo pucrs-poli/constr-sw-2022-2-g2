@@ -6,7 +6,7 @@ router.post("/login", controller.login);
 router.get("/userinfo", controller.userInfo);
 router.get("/users", controller.getUsers);
 router.get("/users/:id", controller.getUserById);
-router.post("/users/:id", controller.createUser);
+router.post("/users", controller.createUser);
 router.delete("/users/:id", controller.deleteUser);
 router.put("/users/:id", controller.updateUserData);
 router.patch("/users/:id", controller.updateUserPassword);
