@@ -77,7 +77,7 @@ const createUser = async (req: Request, res: Response) => {
       headers: {
         Authorization: token,
       },
-      data: res.json(req.body),
+      data: req.body,
     }
   );
 
