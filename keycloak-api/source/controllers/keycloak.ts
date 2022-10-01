@@ -105,11 +105,11 @@ const updateUserData = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
   let response: AxiosResponse = await axios.put(
     `http://localhost:8080/auth/admin/realms/${realm}/users/${id}`,
+    req.body,
     {
       headers: {
         Authorization: token,
-      },
-      data: res.json(req.body),
+      }
     }
   );
 
@@ -121,11 +121,11 @@ const updateUserPassword = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
   let response: AxiosResponse = await axios.put(
     `http://localhost:8080/auth/admin/realms/${realm}/users/${id}/reset-password`,
+    req.body,
     {
       headers: {
         Authorization: token,
-      },
-      data: res.json(req.body),
+      }
     }
   );
 
