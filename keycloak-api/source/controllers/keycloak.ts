@@ -71,17 +71,18 @@ const getUserById = async (req: Request, res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
+  console.log('body:' + req.body.toString())
   let response: AxiosResponse = await axios.post(
     `http://localhost:8080/auth/admin/realms/${realm}/users`,
+    req.body,
     {
       headers: {
         Authorization: token,
-      },
-      data: req.body,
+      }
     }
   );
 
-  return res.status(200).json(response.data);
+  return res.status(201).json(response.data);
 };
 
 const deleteUser = async (req: Request, res: Response) => {
