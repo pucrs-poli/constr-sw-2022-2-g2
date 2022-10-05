@@ -19,10 +19,13 @@ const login = async (req: Request, res: Response) => {
   let response: AxiosResponse = await axios.post(
     `http://localhost:8080/auth/realms/${realm}/protocol/openid-connect/token`,
     params
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data);
 };
+
 //userinfo
 const userInfo = async (req: Request, res: Response) => {
   let token: string = req.headers.authorization || "";
@@ -33,10 +36,11 @@ const userInfo = async (req: Request, res: Response) => {
         Authorization: token,
       },
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  // return response
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data);
 };
 
 const getUsers = async (req: Request, res: Response) => {
@@ -49,9 +53,11 @@ const getUsers = async (req: Request, res: Response) => {
         Authorization: token,
       },
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data); 
 };
 
 const getUserById = async (req: Request, res: Response) => {
@@ -64,12 +70,14 @@ const getUserById = async (req: Request, res: Response) => {
         Authorization: token,
       },
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data); 
 };
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response) => {  
   let token: string = req.headers.authorization || "";
   console.log('body:' + req.body.toString())
   let response: AxiosResponse = await axios.post(
@@ -77,12 +85,14 @@ const createUser = async (req: Request, res: Response) => {
     req.body,
     {
       headers: {
-        Authorization: token,
+        Authorization: token, 
       }
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(201).json(response.data);
+  return res.status(response.status).json(response.data);  
 };
 
 const deleteUser = async (req: Request, res: Response) => {
@@ -95,9 +105,11 @@ const deleteUser = async (req: Request, res: Response) => {
         Authorization: token,
       },
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data);
 };
 
 const updateUserData = async (req: Request, res: Response) => {
@@ -111,9 +123,11 @@ const updateUserData = async (req: Request, res: Response) => {
         Authorization: token,
       }
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data);
 };
 
 const updateUserPassword = async (req: Request, res: Response) => {
@@ -127,9 +141,11 @@ const updateUserPassword = async (req: Request, res: Response) => {
         Authorization: token,
       }
     }
-  );
+  ).catch(function(error) {
+    return error.response
+  });
 
-  return res.status(200).json(response.data);
+  return res.status(response.status).json(response.data);
 };
 
 export default {
