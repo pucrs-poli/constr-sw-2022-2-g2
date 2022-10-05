@@ -20,6 +20,6 @@ services:
   api:
     build: ./keycloak-api
     ports:
-      - 3000:3000
+      - 6060:6060
     networks:
       - constr-sw-2022-2
