@@ -47,4 +47,11 @@ public class ResourcesController {
         detailsRepository.saveAll(details);
         return new ResponseEntity(details, HttpStatus.OK);
     }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping(path = "/id/{id}")
+    public ResponseEntity<String> deleteResourceById(@PathVariable Long id){
+        resourcesRepository.deleteById(id);
+        return new ResponseEntity("Resource deleted.", HttpStatus.OK);
+    }
 }

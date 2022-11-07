@@ -27,7 +27,7 @@ public class Resource implements Serializable {
     private ResourceType resourceType;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resource", cascade = {CascadeType.MERGE, CascadeType.REFRESH}) //mappedBy= referenz attribute name in Offer
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "resource", cascade = {CascadeType.ALL, CascadeType.REFRESH}) //mappedBy= referenz attribute name in Offer
     private List<Detail> details;
 
     public Long getId() {
