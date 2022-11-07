@@ -31,7 +31,8 @@ public class ResourcesController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
-    public ResponseEntity<Resource> createResource(@RequestBody Resource resource){
+    public ResponseEntity<Resource> createResource(@RequestBody List<Resource> resource){
+        resourcesRepository.saveAll(resource);
         return new ResponseEntity(resource, HttpStatus.OK);
     }
 }
