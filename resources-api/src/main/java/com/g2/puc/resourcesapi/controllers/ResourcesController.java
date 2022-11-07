@@ -1,6 +1,8 @@
 package com.g2.puc.resourcesapi.controllers;
 
+import com.g2.puc.resourcesapi.models.Detail;
 import com.g2.puc.resourcesapi.models.Resource;
+import com.g2.puc.resourcesapi.repositories.DetailsRepository;
 import com.g2.puc.resourcesapi.repositories.ResourcesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ public class ResourcesController {
 
     @Autowired
     private ResourcesRepository resourcesRepository;
+
+    @Autowired
+    private DetailsRepository detailsRepository;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping
@@ -34,5 +39,12 @@ public class ResourcesController {
     public ResponseEntity<Resource> createResource(@RequestBody List<Resource> resource){
         resourcesRepository.saveAll(resource);
         return new ResponseEntity(resource, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(path= "/details")
+    public ResponseEntity<Resource> createResourceDetails(@RequestBody List<Detail> details){
+        detailsRepository.saveAll(details);
+        return new ResponseEntity(details, HttpStatus.OK);
     }
 }
