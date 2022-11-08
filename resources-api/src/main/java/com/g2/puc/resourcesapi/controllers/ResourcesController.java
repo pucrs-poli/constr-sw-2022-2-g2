@@ -29,7 +29,12 @@ public class ResourcesController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/id/{id}")
     public ResponseEntity<Resource> getResourceById(@PathVariable Long id){
-        return new ResponseEntity(resourcesService.findResourceById(id), HttpStatus.OK);
+        try{
+            return new ResponseEntity(resourcesService.findResourceById(id), HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity("No resource with given identifier found.", HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -49,8 +54,13 @@ public class ResourcesController {
     @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping(path = "/id/{id}")
     public ResponseEntity<String> deleteResourceById(@PathVariable Long id){
-        resourcesService.deleteResourceById(id);
-        return new ResponseEntity("Resource deleted successfully.", HttpStatus.OK);
+        try {
+            resourcesService.deleteResourceById(id);
+            return new ResponseEntity("Resource deleted successfully.", HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity("No resource with given identifier found.", HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
