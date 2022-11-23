@@ -20,75 +20,81 @@ public class ResourcesController {
     @Autowired
     private ResourcesService resourcesService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @GetMapping
-    public ResponseEntity<List<Resource>> getAllResources(){
+    public ResponseEntity<List<Resource>> getAllResources() {
         List<Resource> resourcesList = resourcesService.getAllResources();
         return new ResponseEntity(resourcesList, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @GetMapping(path = "/id/{id}")
-    public ResponseEntity<Resource> getResourceById(@PathVariable Long id){
-        try{
+    public ResponseEntity<Resource> getResourceById(@PathVariable Long id) {
+        try {
             return new ResponseEntity(resourcesService.findResourceById(id), HttpStatus.OK);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity("No resource with given identifier found.", HttpStatus.NOT_FOUND);
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @PostMapping
-    public ResponseEntity<String> createResource(@RequestBody List<Resource> resources){
+    public ResponseEntity<String> createResource(@RequestBody List<Resource> resources) {
         resourcesService.saveAllResources(resources);
         return new ResponseEntity("Resources created successfully.", HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path="/type")
-    public ResponseEntity<String> createResourceType(@RequestBody ResourceType resourceType){
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/type")
+    public ResponseEntity<String> createResourceType(@RequestBody ResourceType resourceType) {
         resourcesService.saveResourceType(resourceType);
         return new ResponseEntity("Resource type created successfully.", HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path= "/details")
-    public ResponseEntity<Resource> createResourceDetails(@RequestBody List<Detail> details){
+    @CrossOrigin(origins = "*")
+    @GetMapping(path = "/type")
+    public ResponseEntity<List<ResourceType>> getAllResourcesTypes() {
+        List<ResourceType> resourcesList = resourcesService.getAllResourcesType();
+        return new ResponseEntity(resourcesList, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/details")
+    public ResponseEntity<Resource> createResourceDetails(@RequestBody List<Detail> details) {
         resourcesService.createOrUpdateDetails(details);
         return new ResponseEntity(details, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @DeleteMapping(path = "/id/{id}")
-    public ResponseEntity<String> deleteResourceById(@PathVariable Long id){
+    public ResponseEntity<String> deleteResourceById(@PathVariable Long id) {
         try {
             resourcesService.deleteResourceById(id);
             return new ResponseEntity("Resource deleted successfully.", HttpStatus.OK);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity("No resource with given identifier found.", HttpStatus.NOT_FOUND);
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     @PutMapping
-    public ResponseEntity<String> updateResource(@RequestBody Resource resource){
+    public ResponseEntity<String> updateResource(@RequestBody Resource resource) {
         resourcesService.updateResource(resource);
         return new ResponseEntity("Resource updated successfully.", HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PatchMapping(path= "/details")
-    public ResponseEntity<String> updateResourceDetails(@RequestBody List<Detail> details){
+    @CrossOrigin(origins = "*")
+    @PatchMapping(path = "/details")
+    public ResponseEntity<String> updateResourceDetails(@RequestBody List<Detail> details) {
         resourcesService.createOrUpdateDetails(details);
         return new ResponseEntity("Resource details updated.", HttpStatus.OK);
     }
 
     @GetMapping(path = "/search")
-    public ResponseEntity<List<Resource>> getResourcesBySearchParams(@RequestParam(value = "resource_type") Long resourceType,
-                                                                     @RequestParam(required = false) String description) {
-        List<Resource> resources =  resourcesService.findBySearchParams(resourceType, description);
+    public ResponseEntity<List<Resource>> getResourcesBySearchParams(
+            @RequestParam(value = "resource_type") Long resourceType,
+            @RequestParam(required = false) String description) {
+        List<Resource> resources = resourcesService.findBySearchParams(resourceType, description);
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-
 @Service
 public class ResourcesService {
 
@@ -25,7 +24,7 @@ public class ResourcesService {
     private ResourceTypeRepository resourceTypeRepository;
 
     public List<Resource> findBySearchParams(Long resourceType, String description) {
-        if(description== null)
+        if (description == null)
             return resourcesRepository.findAllByResourceType(resourceType);
         return resourcesRepository.findAllByDescription(description, resourceType);
     }
@@ -57,4 +56,9 @@ public class ResourcesService {
     public void saveResourceType(ResourceType resourceType) {
         resourceTypeRepository.save(resourceType);
     }
+
+    public List<ResourceType> getAllResourcesType() {
+        return resourceTypeRepository.findAll();
+    }
+
 }
