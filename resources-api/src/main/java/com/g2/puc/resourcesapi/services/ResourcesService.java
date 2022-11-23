@@ -2,7 +2,9 @@ package com.g2.puc.resourcesapi.services;
 
 import com.g2.puc.resourcesapi.models.Detail;
 import com.g2.puc.resourcesapi.models.Resource;
+import com.g2.puc.resourcesapi.models.ResourceType;
 import com.g2.puc.resourcesapi.repositories.DetailsRepository;
+import com.g2.puc.resourcesapi.repositories.ResourceTypeRepository;
 import com.g2.puc.resourcesapi.repositories.ResourcesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class ResourcesService {
 
     @Autowired
     private ResourcesRepository resourcesRepository;
+
+    @Autowired
+
+    private ResourceTypeRepository resourceTypeRepository;
 
     public List<Resource> findBySearchParams(Long resourceType, String description) {
         if(description== null)
@@ -46,5 +52,9 @@ public class ResourcesService {
 
     public void updateResource(Resource resource) {
         resourcesRepository.save(resource);
+    }
+
+    public void saveResourceType(ResourceType resourceType) {
+        resourceTypeRepository.save(resourceType);
     }
 }

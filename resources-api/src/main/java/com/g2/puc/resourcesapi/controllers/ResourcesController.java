@@ -2,6 +2,7 @@ package com.g2.puc.resourcesapi.controllers;
 
 import com.g2.puc.resourcesapi.models.Detail;
 import com.g2.puc.resourcesapi.models.Resource;
+import com.g2.puc.resourcesapi.models.ResourceType;
 import com.g2.puc.resourcesapi.repositories.DetailsRepository;
 import com.g2.puc.resourcesapi.repositories.ResourcesRepository;
 import com.g2.puc.resourcesapi.services.ResourcesService;
@@ -42,6 +43,13 @@ public class ResourcesController {
     public ResponseEntity<String> createResource(@RequestBody List<Resource> resources){
         resourcesService.saveAllResources(resources);
         return new ResponseEntity("Resources created successfully.", HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(path="/type")
+    public ResponseEntity<String> createResourceType(@RequestBody ResourceType resourceType){
+        resourcesService.saveResourceType(resourceType);
+        return new ResponseEntity("Resource type created successfully.", HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
