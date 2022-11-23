@@ -4,10 +4,26 @@ networks:
 volumes:
   keycloak-data:
     external: true
+  postgresql-data:
+    external: true
 services:
+  postgresql:
+    container_name: postgresql
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=a12345678
+      - POSTGRES_USER=postgres
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    networks:
+      - constr-sw-2022-2
   keycloak:
     container_name: keycloak
-    image: jboss/keycloak:latest
+    image: jboss/keycloak:16.1.1
     ports:
       - 8080:8080
     environment:
@@ -21,5 +37,14 @@ services:
     build: ./keycloak-api
     ports:
       - 6060:6060
+    networks:
+      - constr-sw-2022-2
+  resources-api:
+    depends_on:
+      - postgresql
+    build: ./resources-api
+    entrypoint: mvn spring-boot:run
+    ports:
+      - 8082:8082
     networks:
       - constr-sw-2022-2
