@@ -3,9 +3,9 @@ networks:
   constr-sw-2022-2:
 volumes:
   keycloak-data:
-    external: true
+    external: false
   postgresql-data:
-    external: true
+    external: false
 services:
   postgresql:
     container_name: postgresql
@@ -46,5 +46,10 @@ services:
     entrypoint: mvn spring-boot:run
     ports:
       - 8082:8082
+    environment:
+      - DB_PORT=5432
+      - DB_PASSWORD=a12345678
+      - DB_HOST=postgresql
+      - DB_USER=postgresql
     networks:
       - constr-sw-2022-2
